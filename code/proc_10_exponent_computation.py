@@ -48,9 +48,10 @@ for subject in df.subject_id:
     nr_channels = len(raw.ch_names)
 
     # compute PSD
-    psd, freq = mne.time_frequency.psd_multitaper(epochs, fmin=fmin, fmax=fmax,
-                                                  bandwidth=bandwidth)
-
+    # psd, freq = mne.time_frequency.psd_multitaper(epochs, fmin=fmin, fmax=fmax,
+    #                                               bandwidth=bandwidth)
+    psd, freq = epochs.compute_psd(method="multitaper", fmin=fmin, fmax=fmax, bandwidth=bandwidth).get_data(return_freqs=True)
+    
     # compute 1/f-fit
     exponent = np.zeros((nr_segments, nr_channels)) + np.nan
     rsquare = np.zeros((nr_segments, nr_channels)) + np.nan

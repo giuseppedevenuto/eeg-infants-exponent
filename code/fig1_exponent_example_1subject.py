@@ -1,7 +1,7 @@
 """ This script reproduces the content of Fig. 1 in the manuscript."""
 
 import mne
-from mne.time_frequency import psd_multitaper
+# from mne.time_frequency import psd_multitaper
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import pandas as pd
@@ -28,8 +28,11 @@ events = mne.make_fixed_length_events(raw, start=0, stop=raw.times[-1],
 epochs = mne.Epochs(raw, events, tmin=0, tmax=duration_epochs,
                     baseline=(None, None), preload=True)
 
+
 # select one segment for plotting
-psd, freq = psd_multitaper(epochs, fmin=1, fmax=30.01, bandwidth=1)
+# psd, freq = psd_multitaper(epochs, fmin=1, fmax=30.01, bandwidth=1)
+psd, freq = epochs.compute_psd(method="multitaper", fmin=1, fmax=30.01, bandwidth=1).get_data(return_freqs=True)
+
 fm = fooof.FOOOF()
 which_segment = 0
 fm.fit(freq, psd[which_segment, 0])
@@ -135,7 +138,7 @@ for i_session in range(6):
     ax1 = plt.subplot(gs[1, i_session])
 
     im = mne.viz.plot_topomap(exponents, raw.info,
-                              vmin=vmin, vmax=vmax, axes=ax1)
+                              vlim = (vmin, vmax), axes=ax1)
     ax1.set_xlabel('session %i\n%i days' % (i_session+1, age))
 
 

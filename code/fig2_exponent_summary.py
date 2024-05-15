@@ -37,9 +37,9 @@ width = 0.45
 yoffset = 0.33
 ax1 = ax1 = plt.subplot(gs[0, 0])
 
-mean_exp = df_exp.mean()
+mean_exp = df_exp1.mean()
 im = mne.viz.plot_topomap(mean_exp, raw.info, axes=ax1,
-                          vmin=mean_exp.min()-.05, vmax=mean_exp.max())
+                          vlim=(mean_exp.min()-.05, mean_exp.max()))
 ax1.set_xlim(-0.095, 0.095)
 
 cb = plt.colorbar(im[0], ax=ax1, orientation='horizontal', pad=0.05,

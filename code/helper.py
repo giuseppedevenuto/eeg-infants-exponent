@@ -60,7 +60,7 @@ def remove_bad_segments(subject, raw):
     info = mne.create_info(raw.ch_names, raw.info['sfreq'], ch_types='eeg')
     raw = mne.io.RawArray(data, info)
     montage = mne.channels.make_standard_montage('biosemi32')
-    raw.set_montage(montage, raise_if_subset=False)
+    raw.set_montage(montage, on_missing='ignore')
 
     return raw
 
